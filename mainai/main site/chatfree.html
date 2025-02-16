@@ -4,69 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechTeach AI - Free Chat</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts - Söhne (ChatGPT's font) alternative -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Firebase Authentication Check -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBat87n9jRTdTktdNrUosNmS52BlEgDSPQ",
-            authDomain: "mainai-7cb87.firebaseapp.com",
-            databaseURL: "https://mainai-7cb87-default-rtdb.firebaseio.com",
-            projectId: "mainai-7cb87",
-            storageBucket: "mainai-7cb87.firebasestorage.app",
-            messagingSenderId: "933442186947",
-            appId: "1:933442186947:web:e30e628d284e37ea333c76"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Check authentication
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                window.location.href = '../login.html';
-            }
-        });
-    </script>
-
     <div class="chat-container">
-        <!-- Login Button -->
-        <div class="login-button-container">
-            <div class="nav-buttons">
-                <a href="../login.html" class="login-button">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
-                    </svg>
-                    Login for Unlimited Access
-                </a>
-                <button class="logout-button" onclick="handleLogout()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
-                    </svg>
-                    Logout
-                </button>
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-title">
+                <h1 class="app-title">TechTeach AI</h1>
+                <span class="app-subtitle">Your Programming Assistant</span>
             </div>
-        </div>
+            <a href="../index.html" class="login-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                <span>Login for Unlimited Access</span>
+            </a>
+        </header>
 
         <!-- Main Chat Area -->
-        <main class="main-content">
-            <div class="ai-title">
-                <span class="model-name">TARUN</span>
-                <span class="model-type">AI TEACHER</span>
-            </div>
+        <main class="chat-main">
             <div id="chat-content" class="chat-messages">
-                <!-- Messages will be added here by JavaScript -->
+                <!-- Messages will be added here -->
             </div>
 
             <!-- Input Form -->
-            <form id="chat-form" class="input-form">
+            <form id="chat-form" class="chat-input">
                 <div class="input-container">
                     <input 
                         type="text" 
@@ -80,14 +44,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="disclaimer">
-                    AI Teaching Assistant by Tarun Mehra | Specialized in Computer Science and Programming
-                </div>
             </form>
         </main>
     </div>
 
     <!-- Main Script -->
-    <script type="module" src="chatfree.js"></script>
+    <script src="chatfree.js"></script>
 </body>
-</html> 
+</html>
