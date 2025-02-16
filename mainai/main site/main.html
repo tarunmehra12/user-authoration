@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTeach AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Firebase Authentication Check -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBat87n9jRTdTktdNrUosNmS52BlEgDSPQ",
+            authDomain: "mainai-7cb87.firebaseapp.com",
+            databaseURL: "https://mainai-7cb87-default-rtdb.firebaseio.com",
+            projectId: "mainai-7cb87",
+            storageBucket: "mainai-7cb87.firebasestorage.app",
+            messagingSenderId: "933442186947",
+            appId: "1:933442186947:web:e30e628d284e37ea333c76"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check authentication
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = '../login.html';
+            }
+        });
+    </script>
+
+    <div class="chat-container">
+        <!-- Header with Logout Button -->
+        <header class="chat-header">
+            <div class="header-title">
+                <h1 class="app-title">TechTeach AI</h1>
+                <span class="app-subtitle">Your Programming Assistant</span>
+            </div>
+            <button onclick="handleLogout()" class="logout-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                </svg>
+                <span>Logout</span>
+            </button>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <div id="chat-content" class="chat-messages">
+                <!-- Messages will be added here -->
+            </div>
+
+            <!-- Input Form -->
+            <form id="chat-form" class="chat-input">
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Ask me anything about programming..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="send-button">
+                        <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Main Script -->
+    <script type="module" src="script.js"></script>
+</body>
+</html> 

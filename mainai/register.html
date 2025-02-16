@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TechTeach AI</title>
+    <link rel="stylesheet" href="auth-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="ai-title">
+                <span class="model-name">TARUN</span>
+                <span class="model-type">AI TEACHER</span>
+            </div>
+            <form id="registerForm" class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="auth-button">Register</button>
+                <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+            </form>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="loadingMessage" class="loading-message" style="display: none;">
+                <div class="spinner"></div>
+                <span>Creating your account...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBat87n9jRTdTktdNrUosNmS52BlEgDSPQ",
+            authDomain: "mainai-7cb87.firebaseapp.com",
+            databaseURL: "https://mainai-7cb87-default-rtdb.firebaseio.com",
+            projectId: "mainai-7cb87",
+            storageBucket: "mainai-7cb87.firebasestorage.app",
+            messagingSenderId: "933442186947",
+            appId: "1:933442186947:web:e30e628d284e37ea333c76"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Registration form handling
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = document.getElementById('registerForm');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Show loading state
+            submitButton.disabled = true;
+            loadingMessage.style.display = 'flex';
+            errorMessage.textContent = '';
+
+            try {
+                // Create user account
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Store additional user data
+                await set(ref(database, 'users/' + userCredential.user.uid), {
+                    name: name,
+                    email: email,
+                    createdAt: Date.now()
+                });
+
+                // Show success message
+                loadingMessage.innerHTML = '<span class="success-message">✓ Registration successful! Redirecting...</span>';
+                
+                // Redirect to login page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+
+            } catch (error) {
+                // Hide loading and show error
+                loadingMessage.style.display = 'none';
+                errorMessage.textContent = error.message;
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html> 
